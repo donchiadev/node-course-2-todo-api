@@ -27,7 +27,9 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
     //     console.log('Numero di Documenti: ', count);
     // })
 
-    db.collection('Users').find({location: 'Palagiano'}).toArray( (err, documents) => {
+    db.collection('Users').find({
+        _id: new ObjectId("591b1ccd45c76e284c022cc5")
+    }).toArray( (err, documents) => {
         if (err) {
             return console.log('ERROR: ', err)
         }
