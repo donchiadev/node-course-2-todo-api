@@ -24,6 +24,18 @@ app.post('/todos', (req, res) => {
     
 });
 
+app.get('/todos', (req, res) => {
+    Todo.find({}, (err, docs) => {
+        if (err) {
+            res.status(400).send(err);
+        } else {
+            res.send({
+                todos: docs,
+            });
+        };
+    });
+});
+
 app.listen(port, () => {
     console.log(`Started on Port: ${port}`)
 });
