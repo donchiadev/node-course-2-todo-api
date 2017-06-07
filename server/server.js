@@ -39,12 +39,11 @@ app.get('/todos', (req, res) => {
 
 app.get('/todos/:id', (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
-        res.status(400).send();
+        res.status(404).send({});
     } else {
         Todo.findById(req.params.id).then( (todo) => {
             if (!todo) {
-                res.status(404).send({});
-                return;
+                return res.status(404).send({});    
             } else {
                 res.send({todo})
             };
