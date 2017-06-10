@@ -9,6 +9,9 @@
     "start": "node server/server.js",
     "start-watch": "nodemon server/server.js"
   },
+  "engines": {
+    "node": "6.9.4"
+  },
   "author": "Antonio D'Onchia",
   "license": "ISC",
   "dependencies": {
