@@ -6,12 +6,12 @@ const {User} = require('./../server/models/user')
 
 // Todo.remove({})
 
-// Todo.remove({}).then( (res) => {
-//     console.log(res);
-// });
+Todo.remove().then( (res) => {
+    console.log(JSON.stringify(res.result, undefined, 2));
+});
 
 // Todo.finOneAndRemove()
 
 // Todo.findByIdAndRemove()
 
-Todo.findByIdAndRemove('abc').then( doc => console.log(doc));
+// Todo.findByIdAndRemove('abc').then( doc => console.log(doc));
