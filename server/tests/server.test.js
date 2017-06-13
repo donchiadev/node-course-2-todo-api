@@ -10,10 +10,9 @@ const todos = [{
     text: 'First test todo'
 },{
     _id: new ObjectId(),
-    text: 'Second test todo'
-},{
-    _id: new ObjectId(),
-    text: 'Third test todo'
+    text: 'Second test todo',
+    completed: false,
+    completedAt: 333
 }];
 
 beforeEach( (done) => {
@@ -59,7 +58,7 @@ describe('POST /todos', () => {
                 };
 
                 Todo.find().then( (todos) => {
-                    expect(todos.length).toBe(3);
+                    expect(todos.length).toBe(2);
                     done()
                 }).catch( (e) => done(e));
             });
@@ -72,7 +71,7 @@ describe('GET /todos', () => {
             .get('/todos')
             .expect(200)
             .expect( (res) => {
-                expect(res.body.todos.length).toBe(3);
+                expect(res.body.todos.length).toBe(2);
             })
             .end(done);
            
@@ -139,6 +138,39 @@ describe('DEL /todos/:id', () => {
         .delete(`/todos/${(new ObjectId()).toHexString()}`)
         .expect(404)
         .end(done);
+    });
+
+});
+
+describe('PATCH /todos/:id', () => {
+
+    var body = {text: "Updated Text", completed: true};
+
+    it('should update the todo', (done) => {
+        var id = todos[0]._id.toHexString();
+        request(app)
+            .patch(`/todos/${id}`)
+            .send(body)
+            .expect(200)
+            .expect( (res) => {
+                expect(res.body.todo).toInclude(body);
+                expect(res.body.todo.completedAt).toBeA('number');
+            })
+            .end(done);     
+    });
+
+    it('should clear completedAt when todo is not completed', (done) => {
+        var id = todos[1]._id.toHexString();
+        var body = {text: "Updated Text", completed: false};
+        request(app)
+        .patch(`/todos/${id}`)
+        .send(body)
+        .expect(200)
+        .expect( (res) => {
+            expect(res.body.todo).toInclude(body);
+            expect(res.body.todo.completedAt).toNotExist();
+        })
+       .end(done); 
     });
 
 });
