@@ -1,2 +1,3 @@
 node_modules/
 server/tests/my.server.test.backup
+server/config/config.json
